@@ -1,0 +1,5 @@
+node_modules/
+Deployment/database/
+client/coverage/
+client/build/
+.DS_Store

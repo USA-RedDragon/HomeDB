@@ -1,0 +1,5 @@
+Deployment/
+node_modules/
+.gitignore
+Deployment/database
+!Deployment/wait-for-mysql.sh
