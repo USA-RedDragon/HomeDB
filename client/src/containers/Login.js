@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-import './App.css';
 import "./Login.css";
-import logo from './logo.svg';
 
 export default class Login extends Component {
   constructor(props) {
@@ -31,12 +29,6 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to HomeDB</h2>
-        </div>
-        <div className="App-body">
           <div className="Login">
             <form onSubmit={this.handleSubmit}>
               <FormGroup controlId="username" bsSize="large">
@@ -66,8 +58,6 @@ export default class Login extends Component {
               </Button>
             </form>
           </div>
-        </div>
-      </div>
     );
   }
 }

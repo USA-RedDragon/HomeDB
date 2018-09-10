@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -5,9 +9,30 @@ body {
   background-color: #333;
   color: #aaa;
 }
+.Center {
+  text-align: center;
+}
 
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+  max-height: 70vh;
+
+}
+
+.Site-content {
+  flex: 1 0 auto;
+  padding: var( — space) var( — space) 0;
+  width: 100%;
+}
+
+.Site-content:after {
+  content: ‘\00a0’;
+  display: block;
+  margin-top: var( — space);
+  height: 0;
+  visibility: hidden;
 }
 
 .App-logo {
@@ -21,8 +46,14 @@ body {
   padding: 20px;
 }
 
-.App-intro {
+.Content {
   font-size: large;
+  text-align: center;
+}
+
+.Footer {
+  background-color: #222;
+  height: 100px;
 }
 
 @keyframes spin {
