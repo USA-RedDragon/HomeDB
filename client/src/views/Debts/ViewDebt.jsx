@@ -36,7 +36,7 @@ const styles = {
 };
 
 
-class ViewTransactionPage extends React.Component {
+class ViewDebtsPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -44,63 +44,55 @@ class ViewTransactionPage extends React.Component {
     this.state = {
       message: '',
       error: '',
-      types: [],
-      cards: [],
-      type: 'Groceries',
-      place: '',
-      date: 'mm/dd/yyyy',
-      amount: 0,
-      card: 'TFCU',
-      notes: '',
+      accounts: [],
+      name: '',
+      amount: '',
+      account: 'TFCU',
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.saveTransaction = this.saveTransaction.bind(this);
-    this.deleteTransaction = this.deleteTransaction.bind(this);
+    this.saveDebt = this.saveDebt.bind(this);
+    this.deleteDebt = this.deleteDebt.bind(this);
   }
 
   componentWillMount() {
-    Api.get('transactionTypes').then(res => {
-      this.setState({ types: res.data });
-    });
     Api.get('accounts').then(res => {
-      this.setState({ cards: res.data });
+      this.setState({ accounts: res.data });
     });
     if(this.props.match.params.id){
-      Api.get(`transaction/${this.props.match.params.id}`).then(res => {
+      Api.get(`debt/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
       });
     }
   }
 
-  saveTransaction(e) {
+  saveDebt(e) {
     e.preventDefault();
 
     this.setState({
       error: '',
       message: ''
     })
-
     if(this.props.match.params.id){
-      Api.put(`transaction/${this.props.match.params.id}`, this.state).then(res => {
-        this.setState({message: 'Transaction saved.'});
+      Api.put(`debt/${this.props.match.params.id}`, this.state).then(res => {
+        this.setState({message: 'Debt saved.'});
       }).catch(err => {
         this.setState({error: err.response.data.message});
       });
     } else {
-      Api.post('transaction', this.state).then(res => {
-        this.setState({message: 'Transaction saved.'});
-        this.props.history.push(`/transaction/${res.data.id}`);
+      Api.post('debt', this.state).then(res => {
+        this.setState({message: 'Debt saved.'});
+        this.props.history.push(`/debt/${res.data.id}`);
       }).catch(err => {
         this.setState({error: err.response.data.message});
       });
     }
   }
 
-  deleteTransaction() {
-    if(window.confirm("Are you sure you want to delete this transaction?")){
-      Api.delete(`transaction/${this.props.match.params.id}`).then(res => {
-        this.props.history.push('/dashboard');
+  deleteDebt() {
+    if(window.confirm("Are you sure you want to delete this debt?")){
+      Api.delete(`debt/${this.props.match.params.id}`).then(res => {
+        this.props.history.push('/debts');
       });
     }
   }
@@ -108,7 +100,6 @@ class ViewTransactionPage extends React.Component {
   handleChange(event) {
     const value = event.target.value;
     const name = event.target.name;
-
     this.setState({
       [name]: value
     });
@@ -119,54 +110,26 @@ class ViewTransactionPage extends React.Component {
 
     return (
       <div>
-      <form onSubmit={this.saveTransaction}>
+      <form onSubmit={this.saveDebt}>
         <Grid container>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Create Transaction</h4>
+                <h4 className={classes.cardTitleWhite}>Create Debt</h4>
               </CardHeader>
               <CardBody>
-                  <h4>Transaction Details</h4>
-                  <CustomSpinnerInput
-                    labelText="Type"
-                    id="type"
-                    formControlProps={{
-                      fullWidth: true,
-                      required: true
-                    }}
-                    items={this.state.types}
-                    inputProps={{
-                      name: 'type',
-                      value: this.state.type,
-                      onChange: this.handleChange,
-                      required: true
-                    }}>
-                  </CustomSpinnerInput>
-                  <CustomInput
-                    labelText="Place"
-                    id="place"
-                    formControlProps={{
-                      fullWidth: true,
-                      required: true
-                    }}
-                    inputProps={{
-                      name: 'place',
-                      value: this.state.place,
-                      onChange: this.handleChange,
-                      required: true
-                    }} />
+                  <h4>Debt Details</h4>
                     <CustomInput
-                      labelText="Date"
-                      id="date"
+                      labelText="Name"
+                      id="name"
                       formControlProps={{
                         fullWidth: true,
                         required: true
                       }}
                       inputProps={{
-                        name: 'date',
-                        type: 'date',
-                        value: this.state.date,
+                        name: 'name',
+                        type: 'name',
+                        value: this.state.name,
                         onChange: this.handleChange,
                       }} />
                     <CustomInput
@@ -182,39 +145,25 @@ class ViewTransactionPage extends React.Component {
                         onChange: this.handleChange
                       }} />
                    <CustomSpinnerInput
-                    labelText="Card"
-                    id="card"
+                    labelText="Account"
+                    id="account"
                     formControlProps={{
                       fullWidth: true,
                       required: true
                     }}
-                    items={this.state.cards}
+                    items={this.state.accounts}
                     inputProps={{
-                      name: 'card',
-                      value: this.state.card,
+                      name: 'account',
+                      value: this.state.account,
                       onChange: this.handleChange,
-                      required: true
                     }}>
                   </CustomSpinnerInput>
-                    <CustomInput
-                      labelText="Notes"
-                      id="notes"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        name: 'notes',
-                        value: this.state.notes,
-                        onChange: this.handleChange,
-                        multiline: true,
-                        rows: 12
-                      }} />
               </CardBody>
               <CardFooter>
                 {this.props.match.params.id && 
-                <Button type="button" onClick={this.deleteTransaction} color="danger">Delete Transaction</Button>
+                <Button type="button" onClick={this.deleteDebt} color="danger">Delete Debt</Button>
                 }
-                <Button type="submit" color="primary">Update Transaction</Button>
+                <Button type="submit" color="primary">Update Debt</Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -241,4 +190,4 @@ class ViewTransactionPage extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(ViewTransactionPage));
+export default withRouter(withStyles(styles)(ViewDebtsPage));

@@ -15,6 +15,10 @@ module.exports = function(sequelize, DataTypes) {
     account: {
       type: DataTypes.BIGINT,
       allowNull: true
+    },
+    name: {
+      type: DataTypes.STRING(500),
+      allowNull: false
     }
   }, {
     tableName: 'debts'
