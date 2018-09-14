@@ -13,12 +13,12 @@ import DownIcon from "@material-ui/icons/ArrowDropDown";
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle";
 
-class TransactionsTable extends React.Component {
+class AccountsTable extends React.Component {
 
   constructor(props, context) {
     super(props, context);
     this.state = {
-      sortColumn: 'date',
+      sortColumn: 'name',
       sortAsc: true
     }
   }
@@ -50,9 +50,9 @@ class TransactionsTable extends React.Component {
   }
 
   render() {
-    const { classes, transactions, tableHeaderColor } = this.props;
+    const { classes, accounts, tableHeaderColor } = this.props;
 
-    transactions.sort((a, b) => {
+    accounts.sort((a, b) => {
       if(this.state.sortAsc){
         return a[this.state.sortColumn] > b[this.state.sortColumn];
       } else {
@@ -66,48 +66,36 @@ class TransactionsTable extends React.Component {
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
             <TableRow>
               <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('ID', 'id')}
+                {this.renderHeaderLink('Name', 'name')}
               </TableCell>
               <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('Place', 'place')}
+                {this.renderHeaderLink('Balance', 'balance')}
               </TableCell>
               <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('Type', 'type')}
+                {this.renderHeaderLink('Routing Number', 'routing_number')}
               </TableCell>
               <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('Date', 'date')}
-              </TableCell>
-              <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('Amount', 'amount')}
-              </TableCell>
-              <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('Notes', 'notes')}
+                {this.renderHeaderLink('Account Number', 'account_number')}
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((transaction, key) => {
+            {accounts.map((account, key) => {
               return (
                 <TableRow key={key}>
                   <TableCell className={classes.tableCell}>
-                    <Link to={`/transaction/${transaction.id}`}>
-                    {transaction.id}
+                    <Link to={`/account/${account.id}`}>
+                    {account.name}
                     </Link>
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {transaction.place}
+                    {account.balance}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {transaction.type}
+                    {account.routing_number}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {transaction.date}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {transaction.amount}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {transaction.notes}
+                    {account.account_number}
                   </TableCell>
                 </TableRow>
               );
@@ -119,11 +107,11 @@ class TransactionsTable extends React.Component {
   }
 }
 
-TransactionsTable.defaultProps = {
+AccountsTable.defaultProps = {
   tableHeaderColor: "gray"
 };
 
-TransactionsTable.propTypes = {
+AccountsTable.propTypes = {
   classes: PropTypes.object.isRequired,
   tableHeaderColor: PropTypes.oneOf([
     "warning",
@@ -134,7 +122,7 @@ TransactionsTable.propTypes = {
     "rose",
     "gray"
   ]),
-  transactions: PropTypes.array,
+  accounts: PropTypes.array,
 };
 
-export default withStyles(tableStyle)(TransactionsTable);
+export default withStyles(tableStyle)(AccountsTable);

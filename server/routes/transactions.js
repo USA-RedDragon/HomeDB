@@ -39,15 +39,6 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/api/accounts',
-    handler: async (request, h) => {
-      const Card = request.getModel('accounts');
-      var cards = await Card.findAll();
-      return cards;
-    }
-  },
-  {
-    method: 'GET',
     path: '/api/transaction/{id}',
     handler: async (request, h) => {
       const Type = request.getModel('transaction_types');

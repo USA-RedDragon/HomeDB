@@ -14,11 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     account: {
       type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'accounts',
-        key: 'id'
-      }
+      allowNull: false
     },
     amount: {
       type: DataTypes.DECIMAL,

@@ -10,19 +10,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     meal: {
       type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'meals',
-        key: 'id'
-      }
+      allowNull: false
     },
     item: {
       type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'groceries',
-        key: 'id'
-      }
+      allowNull: false
     },
     amount: {
       type: DataTypes.STRING(500),

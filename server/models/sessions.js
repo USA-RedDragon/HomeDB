@@ -10,11 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     user: {
       type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: "users",
-        key: 'id'
-      }
+      allowNull: false
     }
   }, {
     tableName: 'sessions'

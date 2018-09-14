@@ -18,11 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     account: {
       type: DataTypes.BIGINT,
-      allowNull: true,
-      references: {
-        model: 'accounts',
-        key: 'id'
-      }
+      allowNull: true
     },
     note: {
       type: DataTypes.STRING(5000),

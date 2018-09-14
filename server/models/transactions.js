@@ -10,11 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     type: {
       type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'transaction_types',
-        key: 'id'
-      }
+      allowNull: false
     },
     place: {
       type: DataTypes.STRING(500),
@@ -30,11 +26,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     card: {
       type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'accounts',
-        key: 'id'
-      }
+      allowNull: false
     },
     notes: {
       type: DataTypes.STRING(5000),
