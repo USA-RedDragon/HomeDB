@@ -12,5 +12,5 @@ clean:
 down:
 	docker-compose -f Deployment/docker-compose.yml down
 
-run: build
+run:
 	docker-compose -f Deployment/docker-compose.yml up

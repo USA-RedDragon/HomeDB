@@ -1,5 +1,5 @@
 const validate = async function (decoded, request) {
-    const session = await request.getModel('Session').findById(decoded.session_id);
+    const session = await request.getModel('sessions').findById(decoded.session_id);
 
     if (session) {
         return { isValid: true };

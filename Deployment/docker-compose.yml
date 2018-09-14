@@ -14,15 +14,4 @@ services:
     ports:
       - 3306:3306
 
-  homedb:
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_USER: homedb
-      MYSQL_PASSWORD: homedb
-      MYSQL_DATABASE: homedb
-      APP_KEY: asdfjaujsioehajoshdfoahjsodjolksdjflhanslnmcvlajlujfieyhoaieuyiouayopqhjolfashfklvhnl
-      NODE_PATH: ./client/src
-    image: homedb
-    ports:
-      - 3000:3000
-    command: ["/app/wait-for-mysql.sh", "npm", "run", "dev"]
+  

@@ -16,6 +16,10 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
+    place: {
+      type: DataTypes.STRING(500),
+      allowNull: true
+    },
     date: {
       type: DataTypes.DATEONLY,
       allowNull: false

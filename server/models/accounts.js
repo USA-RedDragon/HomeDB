@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(500),
       allowNull: false
     },
+    balance: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
     routing_number: {
       type: DataTypes.STRING(9),
       allowNull: true

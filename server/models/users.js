@@ -27,7 +27,12 @@ module.exports = function(sequelize, DataTypes) {
     phone_number: {
       type: DataTypes.STRING(10),
       allowNull: false
-    }
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: '0'
+    },
   }, {
     tableName: 'users'
   });

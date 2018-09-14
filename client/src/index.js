@@ -1,21 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
 
-import App from './containers/App'
-import Root from './containers/Root';
-import FourOFour from './containers/404'
-import './index.css';
-import Login from "./containers/Login";
+import "assets/css/material-dashboard-react.css?v=1.3.0";
+
+import indexRoutes from "routes/index.jsx";
+
+const hist = createBrowserHistory();
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Root>
-            <Switch>
-                <Route exact path="/" component={App} />
-                <Route path='/login' component={Login} />
-                <Route path='/*' component={FourOFour} />
-            </Switch>
-        </Root>
-</BrowserRouter>, document.getElementById('root'))
-
+  <Router history={hist}>
+    <Switch>
+      {indexRoutes.map((prop, key) => {
+        return <Route path={prop.path} component={prop.component} key={key} />;
+      })}
+    </Switch>
+  </Router>,
+  document.getElementById("root")
+);
