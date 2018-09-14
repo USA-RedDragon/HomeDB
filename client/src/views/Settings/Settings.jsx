@@ -44,8 +44,7 @@ class Settings extends React.Component {
     this.state = {
       message: '',
       error: '',
-      client_email: '',
-      sales_email: ''
+      dummy: '',
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -89,24 +88,24 @@ class Settings extends React.Component {
             <form onSubmit={this.saveUser}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Email Settings</h4>
+                <h4 className={classes.cardTitleWhite}>Settings</h4>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={12}>
 
-                    <p>Customize the content of the email that is sent to the client if a call is not answered. Use %CLIENT_NAME% to insert the name of the client, and %SALES_NAME% to insert the name of the salesperson.</p>
+                    <p>Dummy Settings until we need them</p>
 
                     <CustomInput
-                      labelText="Client Email"
-                      id="client_email"
+                      labelText="Dummy"
+                      id="dummy"
                       formControlProps={{
                         fullWidth: true,
                         required: true
                       }}
                       inputProps={{
-                        name: 'client_email',
-                        value: this.state.client_email,
+                        name: 'dummy',
+                        value: this.state.dummy,
                         onChange: this.handleChange,
                         multiline: true,
                         rows: 12

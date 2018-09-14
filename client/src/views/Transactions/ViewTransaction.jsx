@@ -13,11 +13,6 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from '@material-ui/core/MenuItem';
-
-import Select from '@material-ui/core/Select';
 
 import Api from "services/api.js";
 
@@ -51,11 +46,11 @@ class ViewTransactionPage extends React.Component {
       error: '',
       types: [],
       cards: [],
-      type: '',
+      type: 'Groceries',
       place: '',
       date: 'mm/dd/yyyy',
       amount: '',
-      card: '',
+      card: 'TFCU',
       notes: '',
     }
 

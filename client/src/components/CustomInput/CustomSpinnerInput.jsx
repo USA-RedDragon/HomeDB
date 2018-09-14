@@ -5,12 +5,7 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-// @material-ui/icons
-import Clear from "@material-ui/icons/Clear";
-import Check from "@material-ui/icons/Check";
+import NativeSelect from '@material-ui/core/NativeSelect';
 // core components
 import customInputStyle from "assets/jss/material-dashboard-react/components/customInputStyle";
 
@@ -31,14 +26,6 @@ function CustomInput({ ...props }) {
     [" " + classes.labelRootError]: error,
     [" " + classes.labelRootSuccess]: success && !error
   });
-  const underlineClasses = classNames({
-    [classes.underlineError]: error,
-    [classes.underlineSuccess]: success && !error,
-    [classes.underline]: true
-  });
-  const marginTop = classNames({
-    [classes.marginTop]: labelText === undefined
-  });
   return (
     <FormControl
         {...formControlProps}
@@ -51,11 +38,11 @@ function CustomInput({ ...props }) {
         >
             {labelText}
         </InputLabel>
-        <Select
+        <NativeSelect
             {...inputProps}
         >
-            { items.map((item) => <MenuItem value={item.id}>{item.name}</MenuItem>) }
-        </Select>
+            { items.map((item) => <option value={item.id}>{item.name}</option>) }
+        </NativeSelect>
     </FormControl>
   );
 }

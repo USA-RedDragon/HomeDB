@@ -68,12 +68,15 @@ module.exports = [
     method: 'POST',
     path: '/api/transaction',
     handler: async (request, h) => {
+      var card = await request.getModel('accounts').findOne({ where: { name: request.payload.card }});
+      var type = await request.getModel('transaction_types').findOne({ where: { name: request.payload.type }});
+
       var transaction = await request.getModel('transactions').create({
         place: request.payload.place,
-        type: request.payload.type,
+        type: type.id,
         date: request.payload.date,
         amount: request.payload.amount,
-        card: request.payload.card,
+        card: card.id,
         notes: request.payload.notes
       });
 
@@ -86,11 +89,41 @@ module.exports = [
       },
       payload: {
         place: Joi.string().required(),
-        type: Joi.number().required(),
-        card: Joi.number().required(),
+        type: Joi.string().required(),
+        card: Joi.string().required(),
         date: Joi.date().required(),
         amount: Joi.number().required(),
-        notes: Joi.string().required()
+        notes: Joi.string()
+      }
+    },
+  }
+  },
+  {
+    method: 'PUT',
+    path: '/api/transaction/{id}',
+    handler: async (request, h) => {
+      const transaction = await request.getModel('transactions').findById(request.params.id);
+      var card = await request.getModel('accounts').findOne({ where: { name: request.payload.card }});
+      var type = await request.getModel('transaction_types').findOne({ where: { name: request.payload.type }});
+
+      request.payload.card = card.id;
+      request.payload.type = type.id
+      await transaction.update(request.payload);
+
+      return h.response().code(204);
+  },
+  options: {
+    validate: {
+      options: {
+        stripUnknown: true
+      },
+      payload: {
+        place: Joi.string().required(),
+        type: Joi.string().required(),
+        card: Joi.string().required(),
+        date: Joi.date().required(),
+        amount: Joi.number().required(),
+        notes: Joi.string()
       }
     },
   }
