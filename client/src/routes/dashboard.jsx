@@ -7,20 +7,24 @@ import Settings from "@material-ui/icons/Settings";
 import Bank from "@material-ui/icons/AccountBalance"
 import Money from "@material-ui/icons/AttachMoney";
 import NoMoney from "@material-ui/icons/MoneyOff";
+import Cart from "@material-ui/icons/ShoppingCart";
 
 // core components/views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import UserProfile from "views/UserProfile/UserProfile.jsx";
 import LogoutPage from "views/Auth/Logout.jsx";
+
 import ViewTransactionPage from "views/Transactions/ViewTransaction.jsx";
 import ViewAccountPage from "views/Accounts/ViewAccount.jsx";
 import ViewDebtPage from "views/Debts/ViewDebt.jsx";
+import EditUserPage from "views/EditUser/EditUser.jsx";
+import UserProfile from "views/UserProfile/UserProfile.jsx";
+
 import TransactionsPage from "views/Transactions/Transactions.jsx";
 import DebtsPage from "views/Debts/Debts.jsx";
 import UsersPage from "views/Users/Users.jsx";
-import EditUserPage from "views/EditUser/EditUser.jsx";
 import SettingsPage from "views/Settings/Settings.jsx";
-import AccountsPage from "../views/Accounts/Accounts.jsx";
+import AccountsPage from "views/Accounts/Accounts.jsx";
+import GroceriesPage from "views/Groceries/GroceriesPage.jsx"
 
 const dashboardRoutes = [
   {
@@ -93,6 +97,13 @@ const dashboardRoutes = [
     navbarName: "My Account",
     icon: Person,
     component: UserProfile
+  },
+  {
+    path: "/groceries",
+    sidebarName: "Groceries",
+    navbarName: "Groceries",
+    icon: Cart,
+    component: GroceriesPage
   },
   {
     path: "/settings",

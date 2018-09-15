@@ -11,7 +11,11 @@ module.exports = function(sequelize, DataTypes) {
     grocery: {
       type: DataTypes.BIGINT,
       allowNull: false
-    }
+    },
+    amount: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
   }, {
     tableName: 'default_groceries'
   });

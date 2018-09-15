@@ -1,0 +1,17 @@
+.Regular {
+    display: block;
+}
+
+.Printable {
+    display: none;
+}
+  
+@media print {
+    .Regular {
+        display: none;
+    }
+
+    .Printable {
+        display: block;
+    }
+}
