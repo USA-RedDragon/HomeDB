@@ -19,7 +19,7 @@ class TransactionsTable extends React.Component {
     super(props, context);
     this.state = {
       sortColumn: 'date',
-      sortAsc: true
+      sortAsc: false
     }
   }
 

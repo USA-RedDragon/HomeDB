@@ -38,7 +38,7 @@ class Dashboard extends React.Component {
   }
   
   getTransactions() {
-    Api.get('transactions').then(res => {
+    Api.get('transactions', { params: { limit: 5 }}).then(res => {
       this.setState({transactions: res.data});
     });
   }

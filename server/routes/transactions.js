@@ -1,7 +1,6 @@
 'use strict';
 
 const Joi = require('joi');
-const bcrypt = require('bcrypt');
 
 module.exports = [
   {
@@ -11,7 +10,7 @@ module.exports = [
       const Type = request.getModel('transaction_types');
       const Account = request.getModel('accounts');
       const Transactions = request.getModel('transactions');
-      var transactions = await Transactions.findAll({ limit: 5 });
+      var transactions = await Transactions.findAll({ limit: request.query.limit, order: [['date', 'DESC']] });
 
       var cardAdded = [];
       for (var i = 0, len = transactions.length; i < len; i++) {
@@ -26,6 +25,13 @@ module.exports = [
         transformed.push(cardAdded[i]);
       }
       return transformed;
+    },
+    options: {
+      validate: {
+          query: {
+              limit: Joi.number().integer().min(1).max(100).default(50000)
+          }
+      }
     }
   },
   {
