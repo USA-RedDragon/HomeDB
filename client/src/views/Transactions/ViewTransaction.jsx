@@ -69,6 +69,8 @@ class ViewTransactionPage extends React.Component {
     if(this.props.match.params.id){
       Api.get(`transaction/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
+        this.setState({ card: res.data.account.id });
+        this.setState({ type: res.data.transaction_type.id });
       });
     }
   }

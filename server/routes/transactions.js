@@ -10,21 +10,21 @@ module.exports = [
       const Type = request.getModel('transaction_types');
       const Account = request.getModel('accounts');
       const Transactions = request.getModel('transactions');
-      var transactions = await Transactions.findAll({ limit: request.query.limit, order: [['date', 'DESC']] });
+      var transactions = await Transactions.findAll({
+        include: [
+          { model: Type,
+            as: "transaction_type",
+            required: true
+          },
+          { model: Account,
+            as: "account",
+            required: true
+          }
+        ],
+        limit: request.query.limit, order: [['date', 'DESC']]
+      });
 
-      var cardAdded = [];
-      for (var i = 0, len = transactions.length; i < len; i++) {
-        var transaction_types = await Type.findOne({ where: { id: transactions[i].type }});
-        transactions[i].type = transaction_types.name;
-        cardAdded.push(transactions[i]);
-      }
-      var transformed = [];
-      for (var i = 0, len = cardAdded.length; i < len; i++) {
-        var cards = await Account.findOne({ where: { id: cardAdded[i].card }});
-        cardAdded[i].card = cards.name;
-        transformed.push(cardAdded[i]);
-      }
-      return transformed;
+      return transactions;
     },
     options: {
       validate: {
@@ -41,13 +41,20 @@ module.exports = [
       const Type = request.getModel('transaction_types');
       const Account = request.getModel('accounts');
       const Transactions = request.getModel('transactions');
-      var transaction = await Transactions.findOne({ where: { id: request.params.id }});
 
-      var transaction_types = await Type.findOne({ where: { id: transaction.type }});
-      transaction.type = transaction_types.name;
-
-      var cards = await Account.findOne({ where: { id: transaction.card }});
-      transaction.card = cards.name;
+      var transaction = await Transactions.findOne({
+        include: [
+          { model: Type,
+            as: "transaction_type",
+            required: true
+          },
+          { model: Account,
+            as: "account",
+            required: true
+          }
+        ],
+        where: { id: request.params.id}
+      });
 
       return transaction;
     }
@@ -56,19 +63,15 @@ module.exports = [
     method: 'POST',
     path: '/api/transaction',
     handler: async (request, h) => {
-      var card = await request.getModel('accounts').findOne({ where: { id: request.payload.card }});
-      var type = await request.getModel('transaction_types').findOne({ where: { name: request.payload.type }});
 
       var transaction = await request.getModel('transactions').create({
         place: request.payload.place,
-        type: type.id,
+        transactionTypeId: request.payload.type,
         date: request.payload.date,
         amount: request.payload.amount,
-        card: card.id,
+        accountId: request.payload.card,
         notes: request.payload.notes
       });
-
-      card.update({balance: card.balance - request.payload.amount});
 
       return transaction;
   },
@@ -79,7 +82,7 @@ module.exports = [
       },
       payload: {
         place: Joi.string().required(),
-        type: Joi.string().required(),
+        type: Joi.number().required(),
         card: Joi.number().required(),
         date: Joi.date().required(),
         amount: Joi.number().required(),
@@ -93,13 +96,14 @@ module.exports = [
     path: '/api/transaction/{id}',
     handler: async (request, h) => {
       const transaction = await request.getModel('transactions').findById(request.params.id);
-      var card = await request.getModel('accounts').findOne({ where: { name: request.payload.card }});
-      var type = await request.getModel('transaction_types').findOne({ where: { name: request.payload.type }});
-
-      request.payload.card = card.id;
-      request.payload.type = type.id
-      await transaction.update(request.payload);
-
+      await transaction.update({
+        place: request.payload.place,
+        transactionTypeId: request.payload.type,
+        date: request.payload.date,
+        amount: request.payload.amount,
+        accountId: request.payload.card,
+        notes: request.payload.notes
+      });
       return h.response().code(204);
   },
   options: {
@@ -109,11 +113,11 @@ module.exports = [
       },
       payload: {
         place: Joi.string().required(),
-        type: Joi.string().required(),
-        card: Joi.string().required(),
+        type: Joi.number().required(),
+        card: Joi.number().required(),
         date: Joi.date().required(),
         amount: Joi.number().required(),
-        notes: Joi.string()
+        notes: Joi.string().allow('').optional()
       }
     },
   }
@@ -124,15 +128,8 @@ module.exports = [
     handler: async (request, h) => {
       const transactions = request.getModel('transactions');
       var transaction = await transactions.findById(request.params.id);
-      var account = await request.getModel('accounts').findById(transaction.card);
 
-      var new_balance = account.balance + transaction.amount;
-      console.log(new_balance);
-      await account.update({balance: new_balance});
-
-      return transactions.destroy({
-        where: { id: request.params.id }
-      }).then(() => {
+      return transaction.destroy({}).then(() => {
         return h.response().code(204);
       });
     }
