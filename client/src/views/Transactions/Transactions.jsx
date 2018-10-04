@@ -53,6 +53,10 @@ class Transactions extends React.Component {
                   <Button color="primary">New Transaction</Button>
                 </Link>
 
+                <Link to="/transaction_type/">
+                  <Button color="primary">New Transaction Type</Button>
+                </Link>
+
                 <TransactionsTable
 									transactions={this.state.transactions}
                 />

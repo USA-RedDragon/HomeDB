@@ -14,6 +14,7 @@ import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import LogoutPage from "views/Auth/Logout.jsx";
 
 import ViewTransactionPage from "views/Transactions/ViewTransaction.jsx";
+import ViewTransactionTypePage from "views/Transactions/ViewTransactionType.jsx";
 import ViewAccountPage from "views/Accounts/ViewAccount.jsx";
 import ViewDebtPage from "views/Debts/ViewDebt.jsx";
 import EditUserPage from "views/EditUser/EditUser.jsx";
@@ -40,6 +41,13 @@ const dashboardRoutes = [
     sidebarName: "View Transaction",
     navbarName: "View Transaction",
     component: ViewTransactionPage
+  },
+  {
+    path: "/transaction_type/:id?",
+    hideSidebar: true,
+    sidebarName: "New Transaction Type",
+    navbarName: "New Transaction Type",
+    component: ViewTransactionTypePage
   },
   { 
     path: "/debt/:id?", 
