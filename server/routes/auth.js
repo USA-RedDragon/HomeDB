@@ -22,7 +22,7 @@ module.exports = [
                 const isValid = await bcrypt.compare(request.payload.password, user.password);
                 if (isValid) {
                     const session = await request.getModel('sessions').create({
-                        user: user.id
+                        userId: user.id
                     });
                     const token = await JWT.sign({
                         session_id: session.id,
@@ -84,7 +84,7 @@ module.exports = [
                 });
 
                 const session = await request.getModel('sessions').create({
-                    user: user.id
+                    userId: user.id
                 });
 
                 const token = await JWT.sign({
