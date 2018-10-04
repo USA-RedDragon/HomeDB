@@ -26,6 +26,10 @@ function CustomInput({ ...props }) {
     [" " + classes.labelRootError]: error,
     [" " + classes.labelRootSuccess]: success && !error
   });
+  if(items[0] && items[0].id !== -1) {
+    //Add a blank item to not cover the prompt
+    items.unshift({id: -1, name: ""});
+  }
   return (
     <FormControl
         {...formControlProps}
