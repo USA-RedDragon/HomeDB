@@ -75,6 +75,9 @@ class TransactionsTable extends React.Component {
                 {this.renderHeaderLink('Type', 'type')}
               </TableCell>
               <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
+                {this.renderHeaderLink('Card', 'card')}
+              </TableCell>
+              <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
                 {this.renderHeaderLink('Date', 'date')}
               </TableCell>
               <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
@@ -98,7 +101,10 @@ class TransactionsTable extends React.Component {
                     {transaction.place}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {transaction.type}
+                    {transaction.transaction_type.name}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {transaction.account.name}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     {transaction.date}
