@@ -46,11 +46,11 @@ class ViewTransactionPage extends React.Component {
       error: '',
       types: [],
       cards: [],
-      type: 'Groceries',
+      type: '',
       place: '',
       date: 'mm/dd/yyyy',
       amount: 0,
-      card: 'TFCU',
+      card: '',
       notes: '',
     }
 
