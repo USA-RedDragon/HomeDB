@@ -47,7 +47,7 @@ class ViewDebtsPage extends React.Component {
       accounts: [],
       name: '',
       amount: '',
-      account: 'TFCU',
+      account: '',
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -62,6 +62,7 @@ class ViewDebtsPage extends React.Component {
     if(this.props.match.params.id){
       Api.get(`debt/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
+        this.setState({ account: res.data.account.id });
       });
     }
   }

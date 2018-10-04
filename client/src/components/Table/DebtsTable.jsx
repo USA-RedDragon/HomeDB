@@ -89,7 +89,7 @@ class DebtsTable extends React.Component {
                     {debt.amount}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {debt.account}
+                    {debt.account.name}
                   </TableCell>
                 </TableRow>
               );

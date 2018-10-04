@@ -10,21 +10,24 @@ module.exports = [
     handler: async (request, h) => {
       const Account = request.getModel('accounts');
       const Debts = request.getModel('debts');
-      var debts;
-      if(request.params.limit) {
-        debts = await Debts.findAll({ limit: request.params.limit });
-      } else {
-        debts = await Debts.findAll();
-      }
 
-      var accountAdded = [];
-      for (var i = 0, len = debts.length; i < len; i++) {
-        var account = await Account.findOne({ where: { id: debts[i].account }});
-        debts[i].account = account.name;
-        accountAdded.push(debts[i]);
+      var debts = Debts.findAll({
+        include: [
+          { model: Account,
+            as: "account",
+            required: true
+          }
+        ],
+        limit: request.query.limit
+      });
+      return debts;
+    },
+    options: {
+      validate: {
+          query: {
+              limit: Joi.number().integer().min(1).max(100).default(50000)
+          }
       }
-      
-      return accountAdded;
     }
   },
   {
@@ -32,10 +35,14 @@ module.exports = [
     path: '/api/debt/{id}',
     handler: async (request, h) => {
       const Account = request.getModel('accounts');
-      var debt = await request.getModel('debts').findOne({ where: { id: request.params.id }});
-
-      var account = await Account.findOne({ where: { id: debt.account }});
-      debt.account = account.name;
+      var debt = await request.getModel('debts').findOne({
+        where: { id: request.params.id },
+        include: [{
+          model: Account,
+          required: true,
+          as: "account"
+        }]
+      });
 
       return debt;
     }
@@ -44,12 +51,10 @@ module.exports = [
     method: 'POST',
     path: '/api/debt',
     handler: async (request, h) => {
-      var account = await request.getModel('accounts').findOne({ where: { name: request.payload.account }});
-
       var debt = await request.getModel('debts').create({
         amount: request.payload.amount,
-        account: account.id,
-        name: request.payload.name,
+        accountId: request.payload.account,
+        name: request.payload.name
       });
 
       return debt;
@@ -60,7 +65,7 @@ module.exports = [
         stripUnknown: true
       },
       payload: {
-        account: Joi.string().required(),
+        account: Joi.number().required(),
         name: Joi.string().required(),
         amount: Joi.number().required()
       }
@@ -72,10 +77,11 @@ module.exports = [
     path: '/api/debt/{id}',
     handler: async (request, h) => {
       const debt = await request.getModel('debts').findById(request.params.id);
-      var account = await request.getModel('accounts').findOne({ where: { name: request.payload.account }});
-
-      request.payload.account = account.id;
-      await debt.update(request.payload);
+      await debt.update({
+        amount: request.payload.amount,
+        accountId: request.payload.account,
+        name: request.payload.name
+      });
 
       return h.response().code(204);
   },
@@ -85,7 +91,7 @@ module.exports = [
         stripUnknown: true
       },
       payload: {
-        account: Joi.string().required(),
+        account: Joi.number().required(),
         name: Joi.string().required(),
         amount: Joi.number().required()
       }
