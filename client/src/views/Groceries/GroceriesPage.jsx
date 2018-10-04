@@ -82,7 +82,6 @@ class Groceries extends React.Component {
 
   handleDialogCloseConfirm() {
     this.handleDialogClose();
-    console.log(this.state.addedGrocery);
     Api.post('grocery_list', this.state.addedGrocery).then(res => {
         this.setState({addedGrocery: {
             id: "1",

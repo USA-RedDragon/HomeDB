@@ -52,11 +52,8 @@ class ViewTransactionPage extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this.props.match);
-
     if(this.props.match.params.id){
       Api.get(`transaction_type/${this.props.match.params.id}`).then(res => {
-        console.log(res.data);
         this.setState(Object.assign({}, res.data));
       });
     }

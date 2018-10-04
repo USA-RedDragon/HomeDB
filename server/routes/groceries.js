@@ -49,7 +49,6 @@ module.exports = [
                 var grocery = await Groceries.findOne({ where: { id: grocery_list[i].grocery } });
                 new_groceries.push(grocery_list[i].toJSON());
                 new_groceries[i].name = grocery.name;
-                console.log(new_groceries[i]);
             }
             return new_groceries;
         }
