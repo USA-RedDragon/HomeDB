@@ -36,15 +36,6 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/api/transactionTypes',
-    handler: async (request, h) => {
-      const Type = request.getModel('transaction_types');
-      var types = await Type.findAll();
-      return types;
-    }
-  },
-  {
-    method: 'GET',
     path: '/api/transaction/{id}',
     handler: async (request, h) => {
       const Type = request.getModel('transaction_types');

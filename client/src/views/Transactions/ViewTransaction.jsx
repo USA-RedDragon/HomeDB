@@ -60,7 +60,7 @@ class ViewTransactionPage extends React.Component {
   }
 
   componentWillMount() {
-    Api.get('transactionTypes').then(res => {
+    Api.get('transaction_types').then(res => {
       this.setState({ types: res.data });
     });
     Api.get('accounts').then(res => {
