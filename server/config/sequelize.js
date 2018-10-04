@@ -9,7 +9,8 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
     min: 0,
     acquire: 30000,
     idle: 10000
-  }
+  },
+  dialectOptions: { decimalNumbers: true }
 });
 
 module.exports = sequelize;

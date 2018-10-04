@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('accounts', {
+  const accounts = sequelize.define('accounts', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     balance: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
     routing_number: {
@@ -21,10 +21,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     account_number: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING(12),
       allowNull: true
     }
   }, {
     tableName: 'accounts'
   });
+
+  return accounts;
 };

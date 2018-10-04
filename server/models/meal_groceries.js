@@ -1,20 +1,12 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('meal_groceries', {
+  var meal_groceries = sequelize.define('meal_groceries', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
-    },
-    meal: {
-      type: DataTypes.BIGINT,
-      allowNull: false
-    },
-    item: {
-      type: DataTypes.BIGINT,
-      allowNull: false
     },
     amount: {
       type: DataTypes.STRING(500),
@@ -23,4 +15,11 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'meal_groceries'
   });
+
+  meal_groceries.associate = function(models) {
+    models.meal_groceries.belongsTo(models.meals);
+    models.meal_groceries.belongsTo(models.groceries);
+  };
+
+  return meal_groceries;
 };

@@ -1,16 +1,12 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('transactions', {
+  var transactions = sequelize.define('transactions', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
-    },
-    type: {
-      type: DataTypes.BIGINT,
-      allowNull: false
     },
     place: {
       type: DataTypes.STRING(500),
@@ -21,11 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     amount: {
-      type: DataTypes.DECIMAL,
-      allowNull: false
-    },
-    card: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
     notes: {
@@ -35,4 +27,11 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'transactions'
   });
+
+  transactions.associate = function(models) {
+    models.transactions.belongsTo(models.transaction_types);
+    models.transactions.belongsTo(models.accounts);
+  };
+
+  return transactions;
 };

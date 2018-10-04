@@ -1,23 +1,19 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('monthly_expenses', {
+  var monthly_expenses = sequelize.define('monthly_expenses', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    type: {
-      type: DataTypes.BIGINT,
-      allowNull: false
-    },
     planned: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
     actual: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
     month: {
@@ -27,4 +23,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'monthly_expenses'
   });
+
+  monthly_expenses.associate = function(models) {
+    models.monthly_expenses.belongsTo(models.expense_type);
+  };
+
+  return monthly_expenses;
 };

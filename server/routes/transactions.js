@@ -65,7 +65,7 @@ module.exports = [
     method: 'POST',
     path: '/api/transaction',
     handler: async (request, h) => {
-      var card = await request.getModel('accounts').findOne({ where: { name: request.payload.card }});
+      var card = await request.getModel('accounts').findOne({ where: { id: request.payload.card }});
       var type = await request.getModel('transaction_types').findOne({ where: { name: request.payload.type }});
 
       var transaction = await request.getModel('transactions').create({
@@ -77,6 +77,8 @@ module.exports = [
         notes: request.payload.notes
       });
 
+      card.update({balance: card.balance - request.payload.amount});
+
       return transaction;
   },
   options: {
@@ -87,10 +89,10 @@ module.exports = [
       payload: {
         place: Joi.string().required(),
         type: Joi.string().required(),
-        card: Joi.string().required(),
+        card: Joi.number().required(),
         date: Joi.date().required(),
         amount: Joi.number().required(),
-        notes: Joi.string()
+        notes: Joi.string().allow('').optional()
       }
     },
   }
@@ -129,11 +131,14 @@ module.exports = [
     method: 'DELETE',
     path: '/api/transaction/{id}',
     handler: async (request, h) => {
-      if(!request.auth.credentials.admin){
-        return h.response().code(403);
-      }
-      
       const transactions = request.getModel('transactions');
+      var transaction = await transactions.findById(request.params.id);
+      var account = await request.getModel('accounts').findById(transaction.card);
+
+      var new_balance = account.balance + transaction.amount;
+      console.log(new_balance);
+      await account.update({balance: new_balance});
+
       return transactions.destroy({
         where: { id: request.params.id }
       }).then(() => {

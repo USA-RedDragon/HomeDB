@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('expense_type', {
+  const expense_type = sequelize.define('expense_type', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -15,4 +15,6 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'expense_type'
   });
+
+  return expense_type;
 };

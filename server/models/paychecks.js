@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('paychecks', {
+  var paychecks = sequelize.define('paychecks', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -12,15 +12,17 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATEONLY,
       allowNull: false
     },
-    account: {
-      type: DataTypes.BIGINT,
-      allowNull: false
-    },
     amount: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false
     }
   }, {
     tableName: 'paychecks'
   });
+
+  paychecks.associate = function(models) {
+    models.paychecks.belongsTo(models.accounts);
+  };
+
+  return paychecks;
 };

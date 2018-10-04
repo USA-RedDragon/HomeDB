@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('deposits', {
+  const deposits = sequelize.define('deposits', {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -13,12 +13,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     amount: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false
-    },
-    account: {
-      type: DataTypes.BIGINT,
-      allowNull: true
     },
     note: {
       type: DataTypes.STRING(5000),
@@ -27,4 +23,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'deposits'
   });
+
+  deposits.associate = function(models) {
+    models.deposits.belongsTo(models.accounts);
+  };
+
+  return deposits;
 };
