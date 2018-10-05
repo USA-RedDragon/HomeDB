@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Checkbox from "@material-ui/core/Checkbox";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -20,7 +19,7 @@ class GroceryList extends React.Component {
     super(props, context);
     this.state = {
       sortColumn: 'name',
-      sortAsc: false
+      sortAsc: true
     }
   }
 
@@ -32,19 +31,17 @@ class GroceryList extends React.Component {
     });
   }
 
-  renderHeaderLink(linkName, linkColumn, printable=false) {
+  renderHeaderLink(linkName, linkColumn) {
     const activeSort = this.state.sortColumn === linkColumn;
     return (
       <span onClick={() => {this.toggleSort(linkColumn)}} className={this.props.classes.tableHeaderLink}>
         {linkName}
-        {activeSort && this.renderSortIcon(linkColumn, printable)}
+        {activeSort && this.renderSortIcon(linkColumn)}
       </span>
     );
   }
 
-  renderSortIcon(printable = false) {
-    if(printable)
-        return;
+  renderSortIcon() {
     if(this.state.sortAsc){
       return <UpIcon className={this.props.classes.sortIcon} />;
     } else {
@@ -53,8 +50,8 @@ class GroceryList extends React.Component {
   }
 
   render() {
-    const { classes, groceries, printable, tableHeaderColor } = this.props;
-
+    const { classes, groceries, tableHeaderColor } = this.props;
+    console.log(groceries);
     groceries.sort((a, b) => {
       if(this.state.sortAsc){
         return a[this.state.sortColumn] > b[this.state.sortColumn];
@@ -62,30 +59,13 @@ class GroceryList extends React.Component {
         return a[this.state.sortColumn] < b[this.state.sortColumn];
       }
     });
-    var printClass = printable ? "Printable":"Regular";
-    if(printable) {
-        var checkboxRow = (
-            <TableCell className={classes.tableCell}>
-                <Checkbox />
-            </TableCell>
-        );
-        var checkboxHead = (
-            <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('In Basket', 'basket', printable)}
-            </TableCell>
-        );
-    }
     return (
-      <div className={`${classes.tableResponsive} ${printClass}`}>
+      <div className={`${classes.tableResponsive}`}>
         <Table className={classes.table}>
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
             <TableRow>
-              {checkboxHead}
               <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('Name', 'name', printable)}
-              </TableCell>
-              <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('Amount', 'amount', printable)}
+                {this.renderHeaderLink('Name', 'name')}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -93,12 +73,8 @@ class GroceryList extends React.Component {
             {groceries.map((grocery, key) => {
               return (
                 <TableRow key={key}>
-                  {checkboxRow}
                   <TableCell className={classes.tableCell}>
-                    {grocery.grocery.name}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {grocery.amount}
+                    {grocery.name}
                   </TableCell>
                 </TableRow>
               );
@@ -126,7 +102,6 @@ GroceryList.propTypes = {
     "gray"
   ]),
   groceries: PropTypes.array,
-  printable: PropTypes.bool
 };
 
 export default withStyles(tableStyle)(GroceryList);
