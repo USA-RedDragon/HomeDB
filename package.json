@@ -1,6 +1,6 @@
 {
   "name": "homedb",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Home Managment Software",
   "scripts": {
     "start": "node server.js",
