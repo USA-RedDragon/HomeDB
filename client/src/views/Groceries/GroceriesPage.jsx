@@ -344,14 +344,10 @@ class Groceries extends React.Component {
           </Grid>
         </div>
         <div className="Printable">
-        <Grid container>
-            <GridItem xs={12} sm={12} md={12}>
-                <GroceryList
-                    groceries={this.state.grocery_list}
-                    printable="true"
-                />
-            </GridItem>
-        </Grid>
+          <GroceryList
+            groceries={this.state.grocery_list}
+            printable
+          />
         </div>
       </div>
     );

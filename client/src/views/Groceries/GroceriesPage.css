@@ -1,17 +1,58 @@
-.Regular {
-    display: block;
-}
-
 .Printable {
     display: none;
 }
-  
+
 @media print {
     .Regular {
         display: none;
     }
 
     .Printable {
-        display: block;
+        display: initial;
     }
+
+    header {
+        display: none !important;
+    }
+
+    .App-content-03 {
+        margin-top: initial !important;
+    }
+    
+    footer {
+        display: none;
+    }
+
+    .GroceryList-tableCell-0274 {
+        padding: 0px !important;
+    }
+
+    .MuiIconButton-root-0370 {
+        height: initial !important;
+    }
+
+    .MuiTableRow-root-0280 {
+        height: initial !important;
+    }
+
+    .App-content-03 {
+        padding: initial !important;
+    }
+
+    .MuiDrawer-docked-0327 {
+        display: none;
+    }
+
+    .App-mainPanel-02 {
+        width: 100% !important;
+    }
+
+    html, body {
+        height: 100%;
+    }
+
+    .MuiTableHead-root-0279 {
+        font-size: 14pt;
+    }
+
 }
