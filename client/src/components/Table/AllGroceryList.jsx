@@ -51,7 +51,6 @@ class GroceryList extends React.Component {
 
   render() {
     const { classes, groceries, tableHeaderColor } = this.props;
-    console.log(groceries);
     groceries.sort((a, b) => {
       if(this.state.sortAsc){
         return a[this.state.sortColumn] > b[this.state.sortColumn];
