@@ -20,7 +20,7 @@ class GroceryList extends React.Component {
     super(props, context);
     this.state = {
       sortColumn: 'name',
-      sortAsc: false
+      sortAsc: true
     }
   }
 
@@ -35,9 +35,9 @@ class GroceryList extends React.Component {
   renderHeaderLink(linkName, linkColumn, printable=false) {
     const activeSort = this.state.sortColumn === linkColumn;
     return (
-      <span onClick={() => {this.toggleSort(linkColumn)}} className={this.props.classes.tableHeaderLink}>
+      <span onClick={() => {this.toggleSort(linkColumn);}} className={this.props.classes.tableHeaderLink}>
         {linkName}
-        {activeSort && this.renderSortIcon(linkColumn, printable)}
+        {activeSort && this.renderSortIcon(printable)}
       </span>
     );
   }
@@ -53,13 +53,21 @@ class GroceryList extends React.Component {
   }
 
   render() {
-    const { classes, groceries, printable, tableHeaderColor } = this.props;
+    const { classes, groceries, printable, tableHeaderColor, foreignKey } = this.props;
 
     groceries.sort((a, b) => {
-      if(this.state.sortAsc){
-        return a[this.state.sortColumn] > b[this.state.sortColumn];
+      if(foreignKey) {
+        if(this.state.sortAsc){
+          return a.grocery[this.state.sortColumn] > b.grocery[this.state.sortColumn];
+        } else {
+          return a.grocery[this.state.sortColumn] < b.grocery[this.state.sortColumn];
+        }
       } else {
-        return a[this.state.sortColumn] < b[this.state.sortColumn];
+        if(this.state.sortAsc){
+          return a[this.state.sortColumn] > b[this.state.sortColumn];
+        } else {
+          return a[this.state.sortColumn] < b[this.state.sortColumn];
+        }
       }
     });
     var printClass = printable ? "Printable":"Regular";
@@ -126,7 +134,8 @@ GroceryList.propTypes = {
     "gray"
   ]),
   groceries: PropTypes.array,
-  printable: PropTypes.bool
+  printable: PropTypes.bool,
+  foreignKey: PropTypes.bool
 };
 
 export default withStyles(tableStyle)(GroceryList);

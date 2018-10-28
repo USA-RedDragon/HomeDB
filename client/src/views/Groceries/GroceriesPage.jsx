@@ -296,6 +296,7 @@ class Groceries extends React.Component {
 
                     <GroceryList
                         groceries={this.state.grocery_list}
+                        foreignKey
                     />
                 </CardBody>
                 <CardFooter>
@@ -315,6 +316,7 @@ class Groceries extends React.Component {
                 <CardBody>
                     <GroceryList
                         groceries={this.state.default_groceries}
+                        foreignKey
                     />
                 </CardBody>
                 <CardFooter>
