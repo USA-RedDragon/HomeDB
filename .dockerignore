@@ -1,5 +1,6 @@
 Deployment/
 node_modules/
+seeders/
 .gitignore
-Deployment/database
+.dockerignore
 !Deployment/wait-for-mysql.sh
