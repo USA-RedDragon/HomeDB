@@ -5,10 +5,12 @@
   "scripts": {
     "start": "node server.js",
     "build": "NODE_ENV=production webpack --config client/config/webpack.config.prod.js",
-    "dev": "npm-run-all --parallel server client",
+    "dev": "npm-run-all --parallel server-local client-local",
     "local": "MYSQL_HOST=localhost MYSQL_USER=homedb MYSQL_PASSWORD=homedb MYSQL_DATABASE=homedb APP_KEY=asdfjaujsioehajoshdfoahjsodjolksdjflhanslnmcvlajlujfieyhoaieuyiouayopqhjolfashfklvhnl NODE_PATH=./client/src npm-run-all --parallel server client",
-    "server": "nodemon server.js",
-    "client": "NODE_ENV=development webpack --config client/config/webpack.config.dev.js --watch"
+    "server-local": "nodemon server.js",
+    "server": "node server.js",
+    "client-local": "NODE_ENV=development webpack --config client/config/webpack.config.dev.js --watch",
+    "client": "NODE_ENV=production webpack --config client/config/webpack.config.prod.js"
   },
   "author": {
     "name": "Jacob McSwain",
