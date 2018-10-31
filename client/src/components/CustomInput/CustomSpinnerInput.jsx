@@ -45,7 +45,7 @@ function CustomInput({ ...props }) {
         <NativeSelect
             {...inputProps}
         >
-            { items.map((item) => <option value={item.id}>{item.name}</option>) }
+            { items.map((item, key) => <option key={key} value={item.id}>{item.name}</option>) }
         </NativeSelect>
     </FormControl>
   );
