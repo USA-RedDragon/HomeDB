@@ -111,6 +111,40 @@ module.exports = [
         return h.response().code(204);
       });
     }
+  },
+  {
+    method: 'POST',
+    path: '/api/user',
+    handler: async (request, h) => {
+      if(!request.auth.credentials.admin){
+        return h.response().code(403);
+      }
+      
+      const users = await request.getModel('users')
+      
+      if(request.payload.password !== request.payload.confirm_password){
+        return h.response({message: 'Passwords don\'t match'}).code(422);
+      }
+      request.payload.password = await bcrypt.hash(request.payload.password, 10);
+      await users.create(request.payload);
+
+      return h.response().code(204);
+    },
+    options: {
+      validate: {
+        options: {
+          stripUnknown: true
+        },
+        payload: {
+          name: Joi.string().required(),
+          username: Joi.string().required(),
+          phone_number: Joi.string().required(),
+          email: Joi.string().email().required(),
+          password: Joi.string().required(),
+          confirm_password: Joi.string().required(),
+          admin: Joi.boolean(),
+        }
+      }
+    }
   }
-  
 ];

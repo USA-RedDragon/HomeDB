@@ -47,9 +47,9 @@ class UserProfile extends React.Component {
       name: '',
       phone_number: '',
       email: '',
-      company: '',
+      username: '',
       password: '',
-      admin: false
+      password_confirm: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -115,7 +115,7 @@ class UserProfile extends React.Component {
             <form onSubmit={this.saveUser}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>My Account</h4>
+                <h4 className={classes.cardTitleWhite}>Add Account</h4>
               </CardHeader>
               <CardBody>
                 <Grid container>
@@ -131,6 +131,19 @@ class UserProfile extends React.Component {
                       inputProps={{
                         name: 'name',
                         value: this.state.name,
+                        onChange: this.handleChange,
+                        required: true
+                      }} />
+                    <CustomInput
+                      labelText="Username"
+                      id="username"
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true
+                      }}
+                      inputProps={{
+                        name: 'username',
+                        value: this.state.username,
                         onChange: this.handleChange,
                         required: true
                       }} />
@@ -160,18 +173,6 @@ class UserProfile extends React.Component {
                           onChange: this.handleChange
                         }} />
                       <CustomInput
-                        labelText="Company"
-                        id="user_company"
-                        formControlProps={{
-                          fullWidth: true,
-                          required: true
-                        }}
-                        inputProps={{
-                          name: 'company',
-                          value: this.state.company || '',
-                          onChange: this.handleChange
-                        }} />
-                      <CustomInput
                         labelText="Password"
                         id="password"
                         formControlProps={{
@@ -182,6 +183,19 @@ class UserProfile extends React.Component {
                           type: 'password',
                           name: 'password',
                           value: this.state.password,
+                          onChange: this.handleChange
+                        }} />
+                      <CustomInput
+                        labelText="Confirm Password"
+                        id="confirm_password"
+                        formControlProps={{
+                          fullWidth: true,
+                          required: passwordRequired
+                        }}
+                        inputProps={{
+                          type: 'password',
+                          name: 'confirm_password',
+                          value: this.state.confirm_password,
                           onChange: this.handleChange
                         }} />
                       
