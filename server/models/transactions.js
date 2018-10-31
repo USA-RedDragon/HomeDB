@@ -23,7 +23,12 @@ module.exports = function(sequelize, DataTypes) {
     notes: {
       type: DataTypes.STRING(5000),
       allowNull: true
-    }
+    },
+    isDebtPayment: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: '0'
+    },
   }, {
     tableName: 'transactions'
   });
@@ -31,6 +36,7 @@ module.exports = function(sequelize, DataTypes) {
   transactions.associate = function(models) {
     models.transactions.belongsTo(models.transaction_types);
     models.transactions.belongsTo(models.accounts);
+    models.transactions.belongsTo(models.debts);
   };
 
   return transactions;

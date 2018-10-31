@@ -13,6 +13,9 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import Api from "services/api.js";
 
@@ -35,7 +38,6 @@ const styles = {
   }
 };
 
-
 class ViewTransactionPage extends React.Component {
 
   constructor(props, context) {
@@ -52,6 +54,9 @@ class ViewTransactionPage extends React.Component {
       amount: 0,
       card: '',
       notes: '',
+      debts: '',
+      debt: 0,
+      isDebt: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -66,10 +71,16 @@ class ViewTransactionPage extends React.Component {
     Api.get('accounts').then(res => {
       this.setState({ cards: res.data });
     });
+    Api.get('debts').then(res => {
+      this.setState({ debts: res.data });
+    });
     if(this.props.match.params.id){
       Api.get(`transaction/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
         this.setState({ card: res.data.account.id });
+        console.log(res.data)
+        this.setState({ isDebt: res.data.isDebtPayment });
+        this.setState({ debt: res.data.debt.id });
         this.setState({ type: res.data.transaction_type.id });
       });
     }
@@ -108,9 +119,11 @@ class ViewTransactionPage extends React.Component {
   }
 
   handleChange(event) {
-    const value = event.target.value;
+    var value = event.target.value;
     const name = event.target.name;
-
+    if(event.target.type === "checkbox") {
+      value = event.target.checked;
+    }
     this.setState({
       [name]: value
     });
@@ -118,7 +131,26 @@ class ViewTransactionPage extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    if(this.state.isDebt) {
+      var debtSpinner = (
+         <CustomSpinnerInput
+          labelText="Debt"
+          id="debt"
+          formControlProps={{
+            fullWidth: true,
+            required: true
+          }}
+          items={this.state.debts}
+          inputProps={{
+            name: 'debt',
+            value: this.state.debt,
+            onChange: this.handleChange,
+            required: true
+          }}></CustomSpinnerInput> 
+      );
+    } else {
+      var debtSpinner = (<div></div>);
+    }
     return (
       <div>
       <form onSubmit={this.saveTransaction}>
@@ -197,7 +229,21 @@ class ViewTransactionPage extends React.Component {
                       onChange: this.handleChange,
                       required: true
                     }}>
-                  </CustomSpinnerInput>
+                    </CustomSpinnerInput>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.isDebt}
+                            onChange={this.handleChange}
+                            name="isDebt"
+                            color="default"
+                          />
+                        }
+                        label="Debt Payment"
+                        />
+                      </FormGroup>
+                      {debtSpinner}
                     <CustomInput
                       labelText="Notes"
                       id="notes"
