@@ -126,9 +126,9 @@ module.exports = [
         return h.response({message: 'Passwords don\'t match'}).code(422);
       }
       request.payload.password = await bcrypt.hash(request.payload.password, 10);
-      await users.create(request.payload);
+      var user = await users.create(request.payload);
 
-      return h.response().code(204);
+      return user;
     },
     options: {
       validate: {

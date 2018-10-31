@@ -49,7 +49,8 @@ class UserProfile extends React.Component {
       email: '',
       username: '',
       password: '',
-      password_confirm: ''
+      password_confirm: '',
+      admin: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -61,6 +62,7 @@ class UserProfile extends React.Component {
     if(this.props.match.params.id){
       Api.get(`user/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
+        console.log(res.data)
       });
     }
   }
@@ -79,7 +81,7 @@ class UserProfile extends React.Component {
 
     this.setState({error: '', message: ''});
 
-    if(this.props.match.params.id){
+    if(this.props.match.params.id) {
       Api.put(`user/${this.props.match.params.id}`, this.state).then(res => {
         this.setState({message: 'User saved.'});
       }).catch(err => {
