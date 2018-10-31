@@ -62,7 +62,6 @@ class UserProfile extends React.Component {
     if(this.props.match.params.id){
       Api.get(`user/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
-        console.log(res.data)
       });
     }
   }
