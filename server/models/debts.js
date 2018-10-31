@@ -20,9 +20,5 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'debts'
   });
 
-  debts.associate = function(models) {
-    models.debts.belongsTo(models.accounts);
-  };
-
   return debts;
 };

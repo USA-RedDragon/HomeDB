@@ -35,7 +35,6 @@ const styles = {
   }
 };
 
-
 class ViewDebtsPage extends React.Component {
 
   constructor(props, context) {
@@ -44,7 +43,6 @@ class ViewDebtsPage extends React.Component {
     this.state = {
       message: '',
       error: '',
-      accounts: [],
       name: '',
       amount: '',
       account: '',
@@ -56,9 +54,6 @@ class ViewDebtsPage extends React.Component {
   }
 
   componentWillMount() {
-    Api.get('accounts').then(res => {
-      this.setState({ accounts: res.data });
-    });
     if(this.props.match.params.id){
       Api.get(`debt/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
@@ -145,20 +140,6 @@ class ViewDebtsPage extends React.Component {
                         value: this.state.amount,
                         onChange: this.handleChange
                       }} />
-                   <CustomSpinnerInput
-                    labelText="Account"
-                    id="account"
-                    formControlProps={{
-                      fullWidth: true,
-                      required: true
-                    }}
-                    items={this.state.accounts}
-                    inputProps={{
-                      name: 'account',
-                      value: this.state.account,
-                      onChange: this.handleChange,
-                    }}>
-                  </CustomSpinnerInput>
               </CardBody>
               <CardFooter>
                 {this.props.match.params.id && 

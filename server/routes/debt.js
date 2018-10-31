@@ -8,16 +8,9 @@ module.exports = [
     method: 'GET',
     path: '/api/debts',
     handler: async (request, h) => {
-      const Account = request.getModel('accounts');
       const Debts = request.getModel('debts');
 
       var debts = Debts.findAll({
-        include: [
-          { model: Account,
-            as: "account",
-            required: true
-          }
-        ],
         limit: request.query.limit
       });
       return debts;
@@ -34,14 +27,8 @@ module.exports = [
     method: 'GET',
     path: '/api/debt/{id}',
     handler: async (request, h) => {
-      const Account = request.getModel('accounts');
       var debt = await request.getModel('debts').findOne({
-        where: { id: request.params.id },
-        include: [{
-          model: Account,
-          required: true,
-          as: "account"
-        }]
+        where: { id: request.params.id }
       });
 
       return debt;
@@ -53,7 +40,6 @@ module.exports = [
     handler: async (request, h) => {
       var debt = await request.getModel('debts').create({
         amount: request.payload.amount,
-        accountId: request.payload.account,
         name: request.payload.name
       });
 
@@ -65,7 +51,6 @@ module.exports = [
         stripUnknown: true
       },
       payload: {
-        account: Joi.number().required(),
         name: Joi.string().required(),
         amount: Joi.number().required()
       }
@@ -79,7 +64,6 @@ module.exports = [
       const debt = await request.getModel('debts').findById(request.params.id);
       await debt.update({
         amount: request.payload.amount,
-        accountId: request.payload.account,
         name: request.payload.name
       });
 
@@ -91,7 +75,6 @@ module.exports = [
         stripUnknown: true
       },
       payload: {
-        account: Joi.number().required(),
         name: Joi.string().required(),
         amount: Joi.number().required()
       }

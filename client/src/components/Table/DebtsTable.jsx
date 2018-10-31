@@ -71,9 +71,6 @@ class DebtsTable extends React.Component {
               <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
                 {this.renderHeaderLink('Amount', 'amount')}
               </TableCell>
-              <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
-                {this.renderHeaderLink('Account', 'account')}
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -87,9 +84,6 @@ class DebtsTable extends React.Component {
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     {debt.amount}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {debt.account.name}
                   </TableCell>
                 </TableRow>
               );

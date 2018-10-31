@@ -54,7 +54,7 @@ class Debts extends React.Component {
                 </Link>
 
                 <DebtsTable
-					debts={this.state.debts}
+				  	      debts={this.state.debts}
                 />
               </CardBody>
             </Card>
