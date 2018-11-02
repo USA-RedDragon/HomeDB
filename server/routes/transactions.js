@@ -1,6 +1,8 @@
 'use strict';
 
-const Joi = require('joi');
+const BaseJoi = require('joi');
+const Extension = require('joi-date-extensions');
+const Joi = BaseJoi.extend(Extension);
 
 module.exports = [
   {
@@ -103,7 +105,7 @@ module.exports = [
         place: Joi.string().required(),
         type: Joi.number().required(),
         card: Joi.number().required(),
-        date: Joi.date().required(),
+        date: Joi.date().format('YYYY-MM-DD').required(),
         amount: Joi.number().required(),
         notes: Joi.string().allow('').optional(),
         debt: Joi.number().required(),
@@ -154,7 +156,7 @@ module.exports = [
         place: Joi.string().required(),
         type: Joi.number().required(),
         card: Joi.number().required(),
-        date: Joi.date().required(),
+        date: Joi.date().format('YYYY-MM-DD').required(),
         amount: Joi.number().required(),
         notes: Joi.string().allow('').optional(),
         isDebt: Joi.boolean().required(),
