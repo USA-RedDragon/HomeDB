@@ -13,6 +13,8 @@ import DownIcon from "@material-ui/icons/ArrowDropDown";
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle";
 
+import formatter from "../../services/formatter"
+
 class DebtsTable extends React.Component {
 
   constructor(props, context) {
@@ -83,7 +85,7 @@ class DebtsTable extends React.Component {
                     </Link>
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {debt.amount}
+                    {formatter.format(debt.amount)}
                   </TableCell>
                 </TableRow>
               );

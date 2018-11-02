@@ -12,6 +12,7 @@ import UpIcon from "@material-ui/icons/ArrowDropUp";
 import DownIcon from "@material-ui/icons/ArrowDropDown";
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle";
+import formatter from "../../services/formatter"
 
 class TransactionsTable extends React.Component {
 
@@ -110,7 +111,7 @@ class TransactionsTable extends React.Component {
                     {transaction.date}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {transaction.amount}
+                    {formatter.format(transaction.amount)}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     {transaction.notes}
