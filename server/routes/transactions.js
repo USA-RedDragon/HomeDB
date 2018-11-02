@@ -157,8 +157,8 @@ module.exports = [
         date: Joi.date().required(),
         amount: Joi.number().required(),
         notes: Joi.string().allow('').optional(),
-        debt: Joi.number().required(),
-        isDebt: Joi.boolean().required()
+        isDebt: Joi.boolean().required(),
+        debt: Joi.number().allow(null)
       }
     },
   }
