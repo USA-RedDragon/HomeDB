@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
-import DebtsTable from "components/Table/DebtsTable.jsx";
+import PaychecksTable from "components/Table/PaychecksTable.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -48,7 +48,8 @@ class Paychecks extends React.Component {
                 <Link to="/paycheck/">
                   <Button color="primary">New Paycheck</Button>
                 </Link>
-              
+                <PaychecksTable
+                  paychecks={this.state.paychecks} />
               </CardBody>
             </Card>
           </GridItem>
