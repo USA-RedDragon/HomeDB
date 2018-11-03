@@ -66,6 +66,7 @@ class Dashboard extends React.Component {
       this.setState({monthlyBalancesChartData: res.data});
     });
     Api.get('yearly_debts').then(res => {
+      console.log(res.data)
       this.setState({yearlyDebtsChartData: res.data});
     });
   }

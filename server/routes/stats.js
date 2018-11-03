@@ -1,28 +1,49 @@
 'use strict';
 
+const weekdays = {
+    0: 'S',
+    1: 'M',
+    2: 'T',
+    3: 'W',
+    4: 'T',
+    5: 'F',
+    6: 'S'
+}
+
+const months = {
+    0: "J",
+    1: "F",
+    2: "M",
+    3: "A",
+    4: "M",
+    5: "J",
+    6: "J",
+    7: "A",
+    8: "S",
+    9: "O",
+    10: "N",
+    11: "D"
+}
+
+Number.prototype.pad = function (size) {
+    var s = String(this);
+    while (s.length < (size || 2)) { s = "0" + s; }
+    return s;
+}
+
 module.exports = [
     {
         method: 'GET',
         path: '/api/total_money',
         handler: async (request, h) => {
-            const accounts = await request.getModel('accounts').findAll();
-            var total = 0;
-            await accounts.forEach(account => {
-                total += account.balance;
-            });
-            return total;
+            return request.getModel('accounts').sum('balance');
         }
     },
     {
         method: 'GET',
         path: '/api/todo_count',
         handler: async (request, h) => {
-            const todos = await request.getModel('todo').findAll();
-            var total = 0;
-            await todos.forEach(() => {
-                total++;
-            });
-            return total;
+            return request.getModel('todo').count();
         }
     },
     {
@@ -37,8 +58,17 @@ module.exports = [
         path: '/api/weekly_transactions',
         handler: async (request, h) => {
             var data = {
-                labels: ["S", "M", "T", "W", "T", "F", "S"],
-                series: [[12, 17, 7, 17, 23, 18, 38]]
+                labels: [],
+                series: [[]]
+            }
+            const Transactions = await request.getModel('transactions');
+            for (var i = 6; i >= 0; i--) {
+                var d = new Date();
+                d.setDate(d.getDate() - i);
+                data.labels.push(weekdays[d.getDay()]);
+                data.series[0].push(
+                    await Transactions.count({ where: { date: d.toISOString().substring(0, 10) } })
+                );
             }
             return data;
         }
@@ -51,11 +81,16 @@ module.exports = [
                 labels: [],
                 series: [[]]
             }
-            for(var i=1; i<31; i++) {
-                i % 2 == 0 ? data.labels.push(""):data.labels.push(i)
+            for (var i = 31; i >= 0; i--) {
+                i % 2 == 0 ? data.labels.push("") : data.labels.push(i.pad())
             }
-            for(var i=1; i<31; i++) {
-                data.series[0].push(i*100)
+            const AccountHistory = await request.getModel('account_history');
+            for (var i = 31; i >= 0; i--) {
+                var d = new Date();
+                d.setDate(d.getDate() - i);
+                data.series[0].push(
+                    await AccountHistory.sum('balance', { where: { date: d.toISOString().substring(0, 10) } })
+                )
             }
             return data;
         }
@@ -65,24 +100,23 @@ module.exports = [
         path: '/api/yearly_debts',
         handler: async (request, h) => {
             var data = {
-                labels: [
-                    "J",
-                    "F",
-                    "M",
-                    "A",
-                    "M",
-                    "J",
-                    "J",
-                    "A",
-                    "S",
-                    "O",
-                    "N",
-                    "D"
-                ],
+                labels: [],
                 series: [[]]
             }
-            for(var i=0; i<12; i++) {
-                data.series[0].push(i*3000)
+            const DebtHistory = await request.getModel('debt_history');
+            for (var i = 11; i >= 0; i--) {
+                var d = new Date();
+                d.setMonth(d.getMonth() - i);
+                data.labels.push(months[d.getMonth()])
+                const sequelize = DebtHistory.sequelize;
+                data.series[0].push(
+                    await DebtHistory.sum('balance', {
+                        where: sequelize.where(
+                            sequelize.fn("MONTH", sequelize.col("date")),
+                            d.getMonth() + 1
+                        )
+                    })
+                )
             }
             return data;
         }
