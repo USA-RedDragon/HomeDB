@@ -17,11 +17,13 @@ import ViewTransactionPage from "views/Transactions/ViewTransaction.jsx";
 import ViewTransactionTypePage from "views/Transactions/ViewTransactionType.jsx";
 import ViewAccountPage from "views/Accounts/ViewAccount.jsx";
 import ViewDebtPage from "views/Debts/ViewDebt.jsx";
+import ViewPaycheckPage from "views/Paychecks/ViewPaycheck.jsx";
 import EditUserPage from "views/EditUser/EditUser.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 
 import TransactionsPage from "views/Transactions/Transactions.jsx";
 import DebtsPage from "views/Debts/Debts.jsx";
+import PaychecksPage from "views/Paychecks/Paychecks.jsx";
 import UsersPage from "views/Users/Users.jsx";
 import SettingsPage from "views/Settings/Settings.jsx";
 import AccountsPage from "views/Accounts/Accounts.jsx";
@@ -83,6 +85,20 @@ const dashboardRoutes = [
     navbarName: "Debts",
     icon: NoMoney,
     component: DebtsPage
+  },
+  {
+    path: "/paychecks",
+    sidebarName: "Paychecks",
+    navbarName: "Paychecks",
+    icon: Money,
+    component: PaychecksPage
+  },
+  { 
+    path: "/paycheck/:id?", 
+    hideSidebar: true,
+    sidebarName: "View Paychecks",
+    navbarName: "View Paychecks",
+    component: ViewPaycheckPage
   },
   {
     adminOnly: true,
