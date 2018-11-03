@@ -63,8 +63,11 @@ class PaychecksPage extends React.Component {
         this.setState({ account: res.data.accountId });
       });
     }
+  }
+
+  componentDidMount() {
     Api.get('accounts').then(res => {
-        this.setState({ accounts: res.data });
+      this.setState({ accounts: res.data });
     });
   }
 

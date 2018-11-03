@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
     this.setState({ value: index });
   };
 
-  componentWillMount() {
+  componentDidMount() {
     Api.get('transactions', { params: { limit: 5 }}).then(res => {
         this.setState({transactions: res.data});
     });

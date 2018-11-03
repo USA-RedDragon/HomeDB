@@ -51,7 +51,7 @@ class Settings extends React.Component {
     this.saveUser = this.saveUser.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     Api.get('user/current').then(res => {
       this.setState(Object.assign({}, res.data));
     })

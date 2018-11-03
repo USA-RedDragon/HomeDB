@@ -78,7 +78,7 @@ class Groceries extends React.Component {
     this.setState({groceryDialogOpen: true});
   }
 
-  componentWillMount() {
+  componentDidMount() {
     Api.get('groceries').then(res => {
       this.setState({ all_groceries: res.data });
     });

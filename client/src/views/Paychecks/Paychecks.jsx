@@ -27,7 +27,7 @@ class Paychecks extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     Api.get('paychecks').then(res => {
       this.setState({paychecks: res.data});
     });

@@ -65,15 +65,6 @@ class ViewTransactionPage extends React.Component {
   }
 
   componentWillMount() {
-    Api.get('transaction_types').then(res => {
-      this.setState({ types: res.data });
-    });
-    Api.get('accounts').then(res => {
-      this.setState({ cards: res.data });
-    });
-    Api.get('debts').then(res => {
-      this.setState({ debts: res.data });
-    });
     if(this.props.match.params.id){
       Api.get(`transaction/${this.props.match.params.id}`).then(res => {
         this.setState(Object.assign({}, res.data));
@@ -83,6 +74,18 @@ class ViewTransactionPage extends React.Component {
         this.setState({ debt: res.data.debt.id });
       });
     }
+  }
+
+  componentDidMount() {
+    Api.get('transaction_types').then(res => {
+      this.setState({ types: res.data });
+    });
+    Api.get('accounts').then(res => {
+      this.setState({ cards: res.data });
+    });
+    Api.get('debts').then(res => {
+      this.setState({ debts: res.data });
+    });
   }
 
   saveTransaction(e) {
