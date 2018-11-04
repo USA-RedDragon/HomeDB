@@ -50,7 +50,39 @@ module.exports = [
         method: 'GET',
         path: '/api/financial_state',
         handler: async (request, h) => {
-            return "Good";
+            var score = 0;
+            const Accounts = await request.getModel('accounts');
+            const MonthlyExpenses = await request.getModel('monthly_expenses');
+
+            var liquidCapital = await Accounts.sum('balance');
+            var expectedExpenses = await MonthlyExpenses.sum('planned');
+            var actualExpenses = await MonthlyExpenses.sum('actual');
+            var budgetRatio = actualExpenses/expectedExpenses;
+
+            const liquidCapitalWeight = 1;
+            const budgetWeight = 1;
+            const numberOfItems = 2;
+
+            if(liquidCapital > 3000)
+                score += 0 * liquidCapitalWeight;
+            else if(liquidCapital > 1000)
+                score += 1 * liquidCapitalWeight;
+            else if(liquidCapital < 500)
+                score += 2 * liquidCapitalWeight;
+
+            /*if(budgetRatio > 1.3)
+                score += 2 * budgetWeight;
+            else if(budgetRatio > 1)
+                score += 1 * budgetWeight;
+            else if(budgetRatio < 1 )
+                score += 0 * budgetWeight;*/
+            
+            if(score >= 2)
+                return "Bad"
+            else if(score >= 1)
+                return "Moderate"
+            else
+                return "Good"
         }
     },
     {
