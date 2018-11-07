@@ -46,7 +46,7 @@ class Groceries extends React.Component {
 
         defaultDialogOpen: false,
         addDefaultGroceryListItem: "",
-        addDefaultGroceryListItem: 0,
+        addDefaultGroceryListAmount: 0,
         
         groceryDialogOpen: false,
         allGroceriesDialogName: ""

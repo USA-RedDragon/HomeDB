@@ -5,7 +5,6 @@ import {
   defaultFont,
   primaryColor,
   primaryBoxShadow,
-  infoColor,
   successColor,
   warningColor,
   dangerColor

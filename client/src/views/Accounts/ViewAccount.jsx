@@ -100,8 +100,6 @@ class ViewAccount extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const passwordRequired = (this.props.match.params.id ? false : true);
-
     return (
       <div>
         <Grid container>

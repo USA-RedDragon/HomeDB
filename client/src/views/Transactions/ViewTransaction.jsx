@@ -133,8 +133,9 @@ class ViewTransactionPage extends React.Component {
 
   render() {
     const { classes } = this.props;
+    var debtSpinner = "";
     if(this.state.isDebt) {
-      var debtSpinner = (
+      debtSpinner = (
          <CustomSpinnerInput
           labelText="Debt"
           id="debt"
@@ -151,7 +152,7 @@ class ViewTransactionPage extends React.Component {
           }}></CustomSpinnerInput> 
       );
     } else {
-      var debtSpinner = (<div></div>);
+      debtSpinner = (<div></div>);
     }
     return (
       <div>
