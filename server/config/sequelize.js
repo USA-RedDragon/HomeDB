@@ -7,10 +7,14 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
   pool: {
     max: 100,
     min: 0,
-    acquire: 30000,
-    idle: 10000
+    acquire: 120000,
+    idle: 120000,
+    evict: 120000
   },
-  dialectOptions: { decimalNumbers: true }
+  dialectOptions: {
+    connectTimeout: 60000,
+    decimalNumbers: true
+  }
 });
 
 module.exports = sequelize;

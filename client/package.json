@@ -20,6 +20,7 @@
   "scripts": {
     "start": "NODE_PATH=./src react-scripts start",
     "build": "NODE_PATH=./src react-scripts build",
+    "deploy": "aws --profile invictrix s3 sync build/ s3://homedb-site",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

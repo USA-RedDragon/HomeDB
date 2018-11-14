@@ -60,8 +60,8 @@ class Login extends React.Component {
   login(e) {
     e.preventDefault();
     this.setState({error: ''});
-
-    axios.post('/api/login', {username: this.state.username, password: this.state.password})
+    
+    axios.post("https:/homesever.mcswainsoftware.com/test/api/login", {username: this.state.username, password: this.state.password})
     .then(res => {
       Auth.setToken(res.data.token);
       //refresh page

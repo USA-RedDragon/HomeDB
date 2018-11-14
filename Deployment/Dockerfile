@@ -1,18 +1,26 @@
-FROM node:alpine
+FROM node:alpine as builder
 
-WORKDIR /app
+WORKDIR /usr/src/app
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 EXPOSE 3000
 
-RUN apk add mysql-client make gcc g++ python
-
-COPY package.json /app
-COPY package-lock.json /app
+COPY package.json /usr/src/app
+COPY package-lock.json /usr/src/app
 
 RUN npm install
 
-COPY . /app
-COPY Deployment/wait-for-mysql.sh /app
-RUN chmod a+x wait-for-mysql.sh
+COPY . /usr/src/app
 
-CMD ["npm", "run", "dev"]
+RUN npm run build
+
+
+FROM nginx:1.13.9-alpine
+
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+RUN rm -rf /etc/nginx/conf.d
+COPY conf /etc/nginx
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

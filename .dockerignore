@@ -4,3 +4,4 @@ seeders/
 .gitignore
 .dockerignore
 !Deployment/wait-for-mysql.sh
+client/

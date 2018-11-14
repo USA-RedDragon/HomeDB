@@ -14,4 +14,23 @@ services:
     ports:
       - 3306:3306
 
+  client:
+    image: homedb_client
+    environment:
+      SERVER_HOST: http://server:3000
+    ports:
+      - 80:80
+  
+  server:
+    image: homedb
+    environment:
+      MYSQL_HOST: homedb
+      MYSQL_USER: homedb
+      MYSQL_PASSWORD: homedb
+      MYSQL_DATABASE: homedb
+      APP_KEY: asdf
+    ports:
+      - 3000:3000
+    
+
   
