@@ -17,7 +17,6 @@ import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebar
 import Auth from "services/auth.js";
 import Logo from "components/Logo/Logo.jsx";
 
-
 const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
@@ -108,6 +107,7 @@ const Sidebar = ({ ...props }) => {
           anchor="left"
           variant="permanent"
           open
+          className="drawerDocked"
           classes={{
             paper: classes.drawerPaper
           }}

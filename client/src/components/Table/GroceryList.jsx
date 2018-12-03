@@ -73,12 +73,12 @@ class GroceryList extends React.Component {
     var printClass = printable ? "Printable":"Regular";
     if(printable) {
         var checkboxRow = (
-            <TableCell className={classes.tableCell}>
+            <TableCell className={`${classes.tableCell} groceryTableCell`}>
                 <Checkbox />
             </TableCell>
         );
         var checkboxHead = (
-            <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
+            <TableCell className={classes.tableCell + " " + classes.tableHeadCell + " groceryTableHead"} >
                 {this.renderHeaderLink('In Basket', 'basket', printable)}
             </TableCell>
         );
@@ -87,12 +87,12 @@ class GroceryList extends React.Component {
       <div className={`${classes.tableResponsive} ${printClass}`}>
         <Table className={classes.table}>
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-            <TableRow>
+            <TableRow className="groceryTableRow">
               {checkboxHead}
-              <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
+              <TableCell className={classes.tableCell + " " + classes.tableHeadCell + " groceryTableHead"} >
                 {this.renderHeaderLink('Name', 'name', printable)}
               </TableCell>
-              <TableCell className={classes.tableCell + " " + classes.tableHeadCell} >
+              <TableCell className={classes.tableCell + " " + classes.tableHeadCell + " groceryTableHead"} >
                 {this.renderHeaderLink('Amount', 'amount', printable)}
               </TableCell>
             </TableRow>
@@ -102,10 +102,10 @@ class GroceryList extends React.Component {
               return (
                 <TableRow key={key}>
                   {checkboxRow}
-                  <TableCell className={classes.tableCell}>
+                  <TableCell className={`${classes.tableCell} groceryTableCell`}>
                     {grocery.grocery.name}
                   </TableCell>
-                  <TableCell className={classes.tableCell}>
+                  <TableCell className={`${classes.tableCell} groceryTableCell`}>
                     {grocery.amount}
                   </TableCell>
                 </TableRow>

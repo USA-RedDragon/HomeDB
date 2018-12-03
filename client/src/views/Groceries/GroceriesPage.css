@@ -15,35 +15,28 @@
         display: none !important;
     }
 
-    .App-content-03 {
+    .content {
         margin-top: initial !important;
+        padding: initial !important;
     }
     
     footer {
         display: none;
     }
 
-    .GroceryList-tableCell-0274 {
+    .groceryTableCell {
         padding: 0px !important;
     }
 
-    .MuiIconButton-root-0370 {
+    .groceryTableRow {
         height: initial !important;
     }
 
-    .MuiTableRow-root-0280 {
-        height: initial !important;
-    }
-
-    .App-content-03 {
-        padding: initial !important;
-    }
-
-    .MuiDrawer-docked-0327 {
+    .drawerDocked {
         display: none;
     }
 
-    .App-mainPanel-02 {
+    .mainPanel {
         width: 100% !important;
     }
 
@@ -51,8 +44,7 @@
         height: 100%;
     }
 
-    .MuiTableHead-root-0279 {
+    .groceryTableHead {
         font-size: 14pt;
     }
-
 }
