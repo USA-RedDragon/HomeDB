@@ -40,10 +40,6 @@
         width: 100% !important;
     }
 
-    html, body {
-        height: 100%;
-    }
-
     .groceryTableHead {
         font-size: 14pt;
     }
