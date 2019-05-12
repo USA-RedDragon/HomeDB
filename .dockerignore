@@ -1,7 +1,0 @@
-Deployment/
-node_modules/
-seeders/
-.gitignore
-.dockerignore
-!Deployment/wait-for-mysql.sh
-client/
