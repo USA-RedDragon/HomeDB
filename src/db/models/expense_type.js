@@ -1,20 +1,20 @@
-/* jshint indent: 2 */
+/* eslint-disable new-cap */
 
 module.exports = function(sequelize, DataTypes) {
-  const expense_type = sequelize.define('expense_type', {
-    id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    name: {
-      type: DataTypes.STRING(500),
-      allowNull: false
-    }
-  }, {
-    tableName: 'expense_type'
-  });
+    const expenseType = sequelize.define('expense_type', {
+        id: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        name: {
+            type: DataTypes.STRING(500),
+            allowNull: false,
+        },
+    }, {
+        tableName: 'expense_type',
+    });
 
-  return expense_type;
+    return expenseType;
 };

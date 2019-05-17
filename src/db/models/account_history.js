@@ -1,30 +1,29 @@
-/* jshint indent: 2 */
+/* eslint-disable new-cap */
 
 module.exports = function(sequelize, DataTypes) {
-    var account_history = sequelize.define('account_history', {
-      id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      date: {
-        type: DataTypes.DATEONLY,
-        allowNull: false
-      },
-      balance: {
-        type: DataTypes.DECIMAL(10,2),
-        allowNull: false
-      }
+    const accountHistory = sequelize.define('account_history', {
+        id: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+        },
+        balance: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+        },
     }, {
-      tableName: 'account_history',
-      timestamps: false
+        tableName: 'account_history',
+        timestamps: false,
     });
 
-    account_history.associate = function(models) {
+    accountHistory.associate = function(models) {
         models.account_history.belongsTo(models.accounts);
     };
 
-    return account_history;
-  };
-  
+    return accountHistory;
+};

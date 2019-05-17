@@ -1,20 +1,15 @@
-/* jshint indent: 2 */
+/* eslint-disable new-cap */
 
 module.exports = function(sequelize, DataTypes) {
-  var sessions = sequelize.define('sessions', {
-    id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    }
-  }, {
-    tableName: 'sessions'
-  });
-
-  sessions.associate = function(models) {
-    models.sessions.belongsTo(models.users);
-  };
-
-  return sessions;
+    return sequelize.define('sessions', {
+        sid: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+        },
+        userId: DataTypes.STRING,
+        expires: DataTypes.DATE,
+        data: DataTypes.STRING(50000),
+    }, {
+        tableName: 'sessions',
+    });
 };

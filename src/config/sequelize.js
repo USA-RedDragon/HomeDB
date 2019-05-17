@@ -1,20 +1,20 @@
-const Sequelize = require('sequelize');
+const config = require('./index');
 
-const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
-  host: process.env.MYSQL_HOST,
-  dialect: 'mysql',
-  operatorsAliases: false,
-  pool: {
-    max: 100,
-    min: 0,
-    acquire: 120000,
-    idle: 120000,
-    evict: 120000
-  },
-  dialectOptions: {
-    connectTimeout: 60000,
-    decimalNumbers: true
-  }
-});
-
-module.exports = sequelize;
+module.exports = {
+    database: config.db.database,
+    username: config.db.username,
+    password: config.db.password,
+    host: config.db.host,
+    dialect: 'mysql',
+    pool: {
+        max: 10,
+        min: 1,
+        acquire: 30000,
+        idle: 10000,
+    },
+    sync: {
+        force: false,
+        alter: true,
+    },
+    logging: false,
+};
