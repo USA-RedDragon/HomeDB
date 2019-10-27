@@ -1,5 +1,9 @@
 const argon2 = require('argon2');
 
+module.exports.GETAPIUsersMe = (req, res) => {
+    res.json(req.user);
+};
+
 module.exports.GETAPIUsers = (req, res) => {
     if (!req.user.admin) {
         return res.send().status(403);
@@ -32,7 +36,7 @@ module.exports.PUTAPIUsersId = (req, res) => {
 
     const userId = (req.params.id === 'current' ? req.user.id : req.params.id);
 
-    req.db.users.findByPk(userId).then(async (user) => {
+    req.db.users.unscoped().findByPk(userId).then(async (user) => {
         if (req.body.password) {
             if (req.params.id === 'current') {
                 // User must enter current password to change password
