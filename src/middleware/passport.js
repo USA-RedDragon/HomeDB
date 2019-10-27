@@ -26,7 +26,7 @@ module.exports = (app) => {
     passport.use(
         new LocalStrategy(
             (username, password, done) => {
-                models.users.findOne({ where: { username: username } }).then((user) => {
+                models.users.unscoped().findOne({ where: { username } }).then((user) => {
                     if (!user) {
                         return done(null, false);
                     }
@@ -35,6 +35,8 @@ module.exports = (app) => {
                         if (!isValid) {
                             return done(null, false);
                         }
+                        // Don't store password in the cookie
+                        delete user.dataValues.password;
                         return done(null, user);
                     });
                 }).catch((err) => {

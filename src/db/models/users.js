@@ -45,5 +45,8 @@ module.exports = function(sequelize, DataTypes) {
                 }
             },
         },
+        defaultScope: {
+            attributes: { exclude: ['password'] },
+        },
     });
 };
