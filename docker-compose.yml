@@ -12,3 +12,17 @@ services:
       - ./database:/var/lib/mysql
     ports:
       - 3306:3306
+
+  api:
+    image: node:10.15-alpine
+    working_dir: /app
+    environment:
+      MARIADB_HOST: "mysql"
+    env_file: .env
+    command: sh -c "apk add python && npm rebuild && npm run start"
+    ports:
+      - 3001:3001
+    depends_on:
+      - mysql
+    volumes:
+      - ./:/app

@@ -21,11 +21,22 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
         },
         account_number: {
-            type: DataTypes.STRING(12),
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        plaid_access_token: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        plaid_item_id: {
+            type: DataTypes.STRING,
             allowNull: true,
         },
     }, {
         tableName: 'accounts',
+        defaultScope: {
+            attributes: { exclude: ['plaid_access_token', 'plaid_item_id'] },
+        },
     });
 
     return accounts;

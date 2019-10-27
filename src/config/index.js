@@ -10,4 +10,10 @@ module.exports = {
         port: process.env.PORT || 3001,
         host: process.env.HOST || 'http://localhost:' + (process.env.PORT || 3001),
     },
+    plaid: {
+        clientId: process.env.PLAID_CLIENT_ID,
+        secret: process.env.PLAID_SECRET,
+        publicKey: process.env.PLAID_PUBLIC_KEY,
+        env: process.env.PLAID_ENV || 'sandbox',
+    },
 };
